@@ -1,0 +1,64 @@
+let dataFillType = "X";
+let boxId;
+let boxChecker = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 0 = empty, 1 = X, 2 = O
+let a; let b; let c
+let win = false;
+// let details;
+
+function numRemover(){
+  let emptyBox ="";
+  for(let i = 1; i <= 9; i++){
+    emptyBox += document.querySelector(`#box-${i}`).textContent = "";
+  }
+}
+
+function switchType(){
+if(dataFillType == "X")
+{
+  dataFillType = "O";
+  return dataFillType;
+}
+else if (dataFillType == "O") 
+{
+  dataFillType = "X";
+  return dataFillType;
+}}
+
+function checkValue(a, b, c)
+{  
+  if(boxChecker[a] != 0 && boxChecker[a] == boxChecker[b] && boxChecker[b] == boxChecker[c])
+  return win = true;
+  else return win = false;
+}
+
+function checkWin()
+{
+  if(checkValue(1,2,3) || checkValue(4,5,6) || checkValue(7,8,9) || checkValue(1,4,7) || checkValue(2,5,8) || checkValue(3,6,9) || checkValue(1,5,9) || checkValue(3,5,7))
+  {
+    console.log("Win");
+    numRemover();
+    boxChecker = [0,0,0,0,0,0,0,0,0,0];
+  }
+  else if(boxChecker[1] != 0 && boxChecker[2] != 0 && boxChecker[3] != 0 && boxChecker[4] != 0 && boxChecker[5] != 0 && boxChecker[6] != 0 && boxChecker[7] != 0 && boxChecker[8] != 0 && boxChecker[9] != 0)
+  {
+    console.log("Draw");
+    numRemover();
+    boxChecker = [0,0,0,0,0,0,0,0,0,0];
+  }
+}
+
+function boxClick() {
+  document.querySelector("#body").addEventListener("click", function(details) {
+    let dataType = switchType();
+    boxId = details.target.id;
+    console.log(boxId);
+    document.querySelector(`#${boxId}`).textContent = dataType;
+    boxChecker[parseInt(boxId)] = dataType;
+    console.log(boxChecker);
+    checkWin();
+  });
+}
+
+
+numRemover();
+boxClick();
